@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>View 3D Model in AR</title>
+
+  <!-- Include AR.js library -->
+  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
+
+</head>
+<body style="margin: 0; overflow: hidden;">
+
+<!-- AR View -->
+<a-scene embedded arjs>
+  <a-assets>
+    <!-- Load your 3D model from GitHub (raw URL) -->
+    <a-asset-item id="3d-model" src="https://github.com/scetanda/models/blob/main/10_20_2024.glb"></a-asset-item>
+  </a-assets>
+
+  <!-- AR Marker -->
+  <a-marker preset="hiro">
+    <a-entity gltf-model="#3d-model" scale="0.5 0.5 0.5"></a-entity>
+  </a-marker>
+
+  <!-- Camera -->
+  <a-camera></a-camera>
+</a-scene>
+
+</body>
+</html>
