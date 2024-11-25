@@ -5,31 +5,61 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>View 3D Model in AR</title>
 
-  <!-- Include AR.js and A-Frame libraries -->
+  <!-- Include A-Frame and AR.js libraries -->
   <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
-  
-  <!-- Include the AR.js surface detection library -->
-  <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
+
+  <!-- Full screen on mobile in portrait mode -->
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+    }
+
+    /* Make sure the scene takes full height in portrait mode */
+    a-scene {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    /* Force the page into portrait mode for mobile */
+    @media (orientation: landscape) {
+      body {
+        display: none;
+      }
+    }
+  </style>
 
 </head>
-<body style="margin: 0; overflow: hidden;">
+<body>
 
-<!-- AR Scene with Ground Plane -->
+<!-- AR Scene with Ground Plane and Interactive Controls -->
 <a-scene embedded arjs='sourceType: webcam; debugUIEnabled: false;' vr-mode-ui="enabled: false">
+  
+  <!-- Assets -->
   <a-assets>
     <!-- Load your 3D model from GitHub (raw URL) -->
     <a-asset-item id="3d-model" src="https://raw.githubusercontent.com/scetanda/models/main/10_20_2024.glb"></a-asset-item>
   </a-assets>
 
-  <!-- Ground Plane Detection -->
+  <!-- Ground Plane Detection for placing the model on the surface -->
   <a-entity arjs-groundplace="type: box;"></a-entity>
 
-  <!-- 3D model entity placed on the detected surface -->
+  <!-- The 3D model -->
   <a-entity gltf-model="#3d-model" scale="0.5 0.5 0.5" position="0 0 0" rotation="0 0 0"></a-entity>
 
-  <!-- Camera -->
-  <a-camera></a-camera>
+  <!-- Camera with controls for pinch-to-zoom and rotation -->
+  <a-camera 
+    position="0 1.6 3" 
+    look-controls="pointerLockEnabled: false;" 
+    touch-enabled="true"
+    orbit-controls="enableDamping: true; dampingFactor: 0.25; rotateSpeed: 0.5;"
+    zoom="enabled: true;">
+  </a-camera>
+
 </a-scene>
 
 </body>
